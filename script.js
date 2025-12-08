@@ -27,6 +27,32 @@ function closeMenu() {
     document.body.style.overflow = '';
 }
 
+document.getElementById("contactForm").addEventListener("submit", function(event){
+    event.preventDefault(); // prevent default form submission
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const subject = document.getElementById("subject").value;
+    const message = document.getElementById("message").value;
+
+    const templateParams = {
+        from_name: name,
+        from_email: email,
+        subject: subject,
+        message: message
+    };
+
+    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams)
+    .then(function(response) {
+        alert("Message sent successfully!");
+        document.getElementById("contactForm").reset();
+    }, function(error) {
+        alert("Failed to send message. Please try again.");
+        console.log("FAILED...", error);
+    });
+});
+
+
 // Event Listeners
 burgerMenu.addEventListener('click', toggleMenu);
 
@@ -568,4 +594,5 @@ document.addEventListener('DOMContentLoaded', () => {
             startAutoSlide();
         }
     });
+
 });
